@@ -30,3 +30,21 @@ void Individual::mutate(double delta, bool mutate_a) {
         b+= delta;
     }
 }
+
+// getters
+
+double Individual::getA() {
+    return a;
+}
+
+double Individual::getB() {
+    return b;
+}
+
+double Individual::getError() {
+    return error;
+}
+
+double Individual::getFitness() {
+    return fitness;
+}
