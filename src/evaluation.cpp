@@ -13,8 +13,8 @@ void Individual::calculateFitness(std::vector<double>& x_points, std::vector<dou
     int n = x_points.size();
 
     for (int i = 0; i < n; i++) {
-        double y_pred = a * x_points[i] + b; // estimed y = a * x + b
-        double diff = y_points[i] - y_pred; //diff between real value and estimed value
+        double y_pred = a * x_points[i] + b; // estimated y = a * x + b
+        double diff = y_points[i] - y_pred; //diff between real value and estimated value
         sum_error += (diff * diff); // MSE (Medium Square Evaluation)
     }
 
