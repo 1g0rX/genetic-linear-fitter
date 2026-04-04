@@ -111,7 +111,7 @@ void GeneticAlgorithm::run(FileManager &fm) {
         int best_idx = findBestIndividual();
         std::stringstream ss;
         ss << population[best_idx].getFitness() << " " << population[best_idx].getError() << " "
-            << population[best_idx].getError() << population[best_idx].getA() << " "
+            << population[best_idx].getError() << " " << population[best_idx].getA() << " "
             << population[best_idx].getA();
         
         fm.writeLine(ss.str());

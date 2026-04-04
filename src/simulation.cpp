@@ -7,7 +7,9 @@
 #include <string>
 #include <vector>
 
-Simulation::Simulation() {
+Simulation::Simulation() {}
+
+void Simulation::start() {
     std::cout << "Starting..." << std::endl;
 
     FileManager fm;
@@ -54,6 +56,6 @@ Simulation::Simulation() {
     ga.run(fm);
 
     fm.closeFiles();
-    std::cout << "Concluded!";
+    std::cout << "Concluded!" << std::endl;
 }
 
