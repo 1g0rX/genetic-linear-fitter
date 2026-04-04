@@ -73,6 +73,39 @@ A simulação acontece em um ciclo de repetição que roda por $G$ gerações. O
 
 4. **Atualização:** O indivíduo com o pior desempenho de toda a população é procurado, removido e o novo Filho entra no seu lugar.
 
+
+**Abaixo, um diagrama para ilustrar de forma bem simples o funcionamento.**
+
+<details>
+<summary>📊 Diagrama de Funcionamento</summary>
+
+```mermaid
+flowchart TD
+    classDef startEnd fill:#2e7d32,stroke:#1b5e20,stroke-width:2px,color:#fff;
+    classDef process fill:#1565c0,stroke:#0d47a1,stroke-width:2px,color:#fff;
+    classDef decision fill:#e65100,stroke:#e65100,stroke-width:2px,color:#fff;
+    classDef io fill:#6a1b9a,stroke:#4a148c,stroke-width:2px,color:#fff;
+
+    A([Inicio da Simulacao]):::startEnd --> B[/"Ler arquivo input.dat"/]:::io
+    B --> C["Criar Populacao Inicial Aleatoria"]:::process
+    C --> D["Avaliar Populacao Inteira"]:::process
+    D --> E{"Atingiu G geracoes?"}:::decision
+    
+    E -- Nao --> F["Selecionar os 2 Melhores Pais"]:::process
+    F --> G["Crossover: A do Pai 1 e B do Pai 2"]:::process
+    G --> H["Mutacao: Somar/Subtrair delta"]:::process
+    H --> I["Calcular Erro e Fitness do Filho"]:::process
+    I --> J["Encontrar o Pior Individuo"]:::process
+    J --> K["Substituir o Pior pelo Filho"]:::process
+    K --> L[/"Gravar linha no output.dat"/]:::io
+    L --> E
+    
+    E -- Sim --> M([Fim da Simulacao]):::startEnd
+
+```
+</summary>
+</details>
+
 ## ⚙️ Ajustes, Parâmetros e Como Alterá-los
 
 O simulador permite algumas alterações. Alguns parâmetros podem ser alterados em `src/simulation.cpp`:
