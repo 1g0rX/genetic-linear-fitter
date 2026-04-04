@@ -2,7 +2,7 @@
 # <h1 align="center"> Algoritmo Genético: Ajuste de Função Linear </h1>
 
 <p align="center">
-<img loading="lazy" src="https://img.shields.io/static/v1?label=STATUS&message=CONCLUÍDO&color=GREEN&style=for-the-badge" />
+<img loading="lazy" src="https://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge" />
 <img loading="lazy" src="https://img.shields.io/static/v1?label=Linguagem&message=C%2B%2B&color=blue&style=for-the-badge" />
 <img loading="lazy" src="https://img.shields.io/static/v1?label=Disciplina&message=AEDS%20I&color=orange&style=for-the-badge" />
 </p>
@@ -12,21 +12,25 @@
 <p align="justify">
 Ajuste de curvas e regressão linear são desafios muito comuns na matemática e na computação. O objetivo é simples: encontrar uma linha que passe o mais perto possível de um conjunto de pontos espalhados em um gráfico.
 
-Neste projeto, em vez de usar fórmulas fechadas da estatística tradicional, utilizamos uma técnica de Inteligência Artificial chamada <b>Algoritmo Genético (AG)</b>. Inspirado na teoria da evolução de Charles Darwin, o nosso programa cria uma "população" de linhas aleatórias e faz com que elas cruzem, sofram mutações e compitam entre si. Geração após geração, as linhas ruins são descartadas e o computador "aprende" os coeficientes da reta perfeita.
+Neste projeto, em vez de usar fórmulas fechadas da estatística tradicional, utilizamos uma técnica de Inteligência Artificial chamada <b>Algoritmo Genético (AG)</b>. Inspirado na teoria da evolução de Charles Darwin, o nosso programa cria uma "população" de linhas aleatórias e faz com que elas cruzem, sofram mutações e compitam entre si. Geração após geração, as linhas ruins são descartadas e o algoritmo converge para coeficientes próximos da reta ideal.
 
 </p>
 
 ## :bookmark_tabs: Descrição do Projeto
 
-Este software é um simulador computacional desenvolvido em **C++ Orientado a Objetos** para ajustar uma função linear do tipo $\hat{y} = ax + b$ a um conjunto de coordenadas $(x, y)$.
+Este software é um simulador computacional desenvolvido em **C++ Orientado a Objetos** para ajustar uma função linear do tipo 
+
+$$\hat{y} = ax + b$$ 
+
+a um conjunto de coordenadas $(x, y)$.
 
 A população do algoritmo é gerenciada utilizando alocação de memória dinâmica através da estrutura `std::vector`. Cada indivíduo dentro do programa possui seu próprio "DNA", que guarda os valores de $a$ (a inclinação da reta) e $b$ (a altura onde a reta corta o eixo). Ao longo da execução, o algoritmo busca diminuir as distâncias entre a reta e os pontos de entrada até encontrar a resposta ideal.
 
 O trabalho foi proposto pelo professor Michel Pires Silva, como um exercício prático para a disciplina de Algoritmos e Estrutura de Dados I, do Centro Federal de Educação Tecnológica de Minas Gerais (CEFET - MG).
 
-## 🧮 Matemática e Cálculos Principais
+## 🧮 Base Matemática do Algoritmo
 
-O "motor" que diz ao algoritmo se uma reta é boa ou ruim é a matemática. Abaixo estão detalhados os dois principais cálculos que o sistema faz a cada tentativa:
+Abaixo estão detalhados os dois principais cálculos que o sistema faz a cada tentativa:
 
 ### 1. Erro Quadrático Médio (MSE)
 
@@ -36,7 +40,7 @@ $$
 \text{Erro} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 $$
 
-**O que isso significa na prática?**
+**Na prática, acontece o seguinte:**
 
 1. O programa olha para um ponto real ($y_i$) e compara com onde a reta estimou que o ponto estaria ($\hat{y}_i$).
 
@@ -54,8 +58,8 @@ $$
 \text{Fitness} = \frac{1}{\text{Erro} + 10^{-6}}
 $$
 
-**Por que usar o** $10^{-6}$ **(0.000001)?**
-Esse pequeno número é uma constante de segurança contra falhas no sistema. Imagine que o algoritmo encontrou a reta absolutamente perfeita e o Erro foi exatamente $0$. Sem o $10^{-6}$, a fórmula tentaria dividir $1$ por $0$. Como não existe divisão por zero na matemática, o programa sofreria um "crash" e fecharia sozinho. Colocando esse valor minúsculo, garantimos que o código sempre funcionará com segurança, e que um erro zero resulte num Fitness gigantesco (1.000.000).
+
+> A constante $10^{-6}$ está na fórmula como uma forma de segurança contra crashes caso houver uma divisão por zero, garantindo assim estabilidade numérica.
 
 ## :pushpin: O Ciclo Evolutivo
 
@@ -71,30 +75,29 @@ A simulação acontece em um ciclo de repetição que roda por $G$ gerações. O
 
 ## ⚙️ Ajustes, Parâmetros e Como Alterá-los
 
-O simulador é flexível e permite que você altere as regras do jogo. A brincadeira fica interessante quando você ajusta os parâmetros em `src/simulation.cpp`:
+O simulador permite algumas alterações. Alguns parâmetros podem ser alterados em `src/simulation.cpp`:
 
-### O que é o Passo de Mutação (`delta`)?
+### Passo de Mutação (`delta`):
 
 Definido como `double delta = 0.1;`, ele é o limite máximo do valor que será adicionado ou subtraído do gene durante a mutação. O sistema sorteia aleatoriamente um valor entre $-\delta$ e $+\delta$.
 
 * Se você **aumentar** esse valor (ex: para `1.0`), as mutações causarão mudanças bruscas. Isso é útil no começo para a reta dar grandes "saltos" pelo gráfico.
 
-* Se você **diminuir** esse valor (ex: para `0.01`), a mutação fará mudanças microscópicas. É ótimo para o ajuste fino, lapidando a reta para o erro chegar o mais perto possível do zero absoluto.
+* Se você **diminuir** esse valor (ex: para `0.01`), a mutação fará mudanças microscópicas. É ótimo para o ajuste fino, permitindo um ajuste mais fino, aproximando o erro de zero.
 
-### O que é a Semente (`seed`)?
+### Semente (`seed`):
 
-O computador não sabe gerar números verdadeiramente aleatórios, ele usa fórmulas complexas que "parecem" aleatórias (pseudoaleatórios). A variável `int seed = 42;` é o ponto de partida dessa fórmula.
+O computador não sabe gerar números verdadeiramente aleatórios, ele usa fórmulas complexas que parecem aleatórias (pseudoaleatórios). A variável `int seed = 42;` é o ponto de partida dessa fórmula.
 
-* A utilidade da semente é a **reprodutibilidade**. Se rodarmos o código hoje e amanhã usando a mesma `seed 42`, os resultados iniciais sorteados serão exatamente iguais. Isso é vital para saber se uma modificação que você fez no código realmente melhorou o programa ou se foi apenas sorte.
+* A utilidade da semente é a **reprodutibilidade**. Se rodarmos o código hoje e amanhã usando a mesma `seed 42`, os resultados iniciais sorteados serão exatamente iguais. Isso é vital para saber se uma modificação feita no código realmente melhorou o programa ou se foi apenas sorte.
 
 * Se você alterar o número da `seed` para `10`, `99` ou `123`, a população inicial nascerá em locais completamente diferentes, mudando a história da evolução.
 
 ## 🧪 Casos de Teste e Validação
 
-Para verificar o código na prática, utilizamos três cenários de testes enxutos limitados a apenas **20 gerações** e com mutações de `0.1`. Abaixo estão as saídas reais geradas pelo sistema:
+Para verificar o código na prática, utilizamos três cenários simples de testes limitados a apenas **20 gerações** e com mutações de `0.1`. Abaixo estão as saídas reais geradas pelo sistema:
 
-### Teste 1: A Reta Perfeita (Erros despencando)
-
+### Teste 1: Uma Reta
 Neste teste, os pontos desenham exatamente a função $y = 2x + 0$.
 **Entrada (`input.dat`):**
 
@@ -120,7 +123,7 @@ Neste teste, os pontos desenham exatamente a função $y = 2x + 0$.
 
 ```
 
-**Análise:** Em apenas 20 gerações, a coluna de Erro despenca de 6.33 para 0.027, enquanto os coeficientes migram em direção à resposta correta ($a \approx 2.0$ e $b \approx 0.0$).
+**Análise:** Em apenas 20 gerações, a coluna de Erro cai de 6.33 para 0.027, enquanto os coeficientes migram em direção à resposta correta ($a \approx 2.0$ e $b \approx 0.0$).
 
 > **Nota de Precisão Matemática:** Como o algoritmo utiliza representação de ponto flutuante em um espaço contínuo, é estatisticamente improvável sortear exatamente os valores `2.000000` e `0.000000`. Em simulações mais longas, o erro atingirá notações da ordem de $10^{-5}$ (ex: `0.00008`), o que caracteriza a **Convergência Absoluta** da Inteligência Artificial.
 
@@ -180,13 +183,12 @@ Neste teste, simulamos a função $y = -2x + 10$. Aqui a reta "cai" em vez de su
 
 ```
 
-**Análise Comportamental:** Este teste demonstra perfeitamente a inteligência do algoritmo. Como os pontos exigem valores muito altos no eixo Y ($8.0$, $6.0$), e a população inicial nasceu com uma base muito baixa ($b = 0.29$), o algoritmo encontrou mais facilidade de sobrevivência puxando o eixo inteiro para cima (aumentando o $b$ para $0.63$) do que tentando inclinar a reta no curto prazo das 20 iterações. Em uma simulação mais longa, a reta estabilizaria sua elevação e passaria a buscar agressivamente a declividade negativa para a resposta ideal ($a = -2.0, b = 10.0$).
+**Análise Comportamental:** Este teste demonstra a inteligência do algoritmo. Como os pontos exigem valores muito altos no eixo Y ($8.0$, $6.0$), e a população inicial nasceu com uma base muito baixa ($b = 0.29$), o algoritmo encontrou mais facilidade de sobrevivência ajustando o termo linear $b$ (aumentando-o para $0.63$) do que tentando inclinar a reta no curto prazo das 20 iterações. Em uma simulação mais longa, a reta estabilizaria sua elevação e passaria a buscar agressivamente a declividade negativa para a resposta ideal ($a = -2.0, b = 10.0$).
 
 ## 📈 Análise Assintótica e Eficiência
 
-O código foi cuidadosamente desenvolvido para poupar memória e processamento. Em uma abordagem básica, toda a população é reavaliada em cada nova geração, custando um tempo absurdo de $\mathcal{O}(G \times m \times n)$.
+O código foi desenvolvido para poupar memória e processamento. Em vez de reavaliar toda a população, que teria um custo e um tempo de $\mathcal{O}(G \times m \times n)$, a avaliação da população inteira ocorre apenas uma vez na geração 0. Nas gerações seguintes, é avaliado apenas o filho recém nascido, pois o resto da população não mudou.
 
-**Na nossa implementação**, a avaliação da população inteira ocorre **apenas uma vez** na geração 0. Nas gerações seguintes, o código é inteligente e avalia **apenas o Filho** recém-nascido, afinal, o resto da população não mudou!
 
 | **Operação Genética** | **Tempo (Pior Caso)** | **Descrição** | 
  | ----- | ----- | ----- | 
@@ -226,7 +228,7 @@ O código foi cuidadosamente desenvolvido para poupar memória e processamento. 
 
 ### 1. Verificando os Requisitos do Sistema
 
-Antes de começar, o seu ambiente Linux precisa ter as ferramentas de compilação instaladas. Abra o terminal e verifique:
+Antes de começar, o seu ambiente GNU/Linux precisa ter as ferramentas de compilação instaladas. Abra o terminal e verifique:
 
 **Compilador C++ (`g++`):**
 
@@ -268,10 +270,10 @@ cd genetic-linear-fitter
 ```
 
 **Passo 3: Configurar os dados (`input.dat`)**
-Abra o arquivo `data/input.dat` e coloque os seus dados. O formato deve ser: número de pontos, população e gerações na primeira linha, seguidos pelos pontos de X e Y.
+Crie o arquivo `data/input.dat` e coloque os seus dados. O formato deve ser: número de pontos, população e gerações na primeira linha, seguidos pelos pontos de X e Y.
 
 **Passo 4: Compilar o código**
-Use o Makefile para limpar sujeiras antigas e compilar do zero de forma limpa e segura:
+Use o Makefile para limpar sujeiras antigas e compilar novamente:
 
 ```
 
@@ -281,7 +283,6 @@ make
 ```
 
 **Passo 5: Executar a simulação**
-Agora é só dar a largada:
 
 ```
 
@@ -293,9 +294,9 @@ Ao finalizar, abra a pasta `data/` e visualize o arquivo `output.dat`. A última
 
 ## :computer: Ambiente de Teste
 
-Este projeto foi desenvolvido, executado e exaustivamente testado utilizando:
+Este projeto foi desenvolvido, executado e testado utilizando:
 
-* **Sistema Operacional:** Debian GNU/Linux 13 (Trixie)
+* **Sistema Operacional:** Debian GNU/Linux 13 (Trixie) e Debian GNU/Linux Testing
 
 * **Compilador:** GCC (g++)
 
