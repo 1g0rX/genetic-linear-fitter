@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "evaluation.hpp"
+#include "io.hpp"
 
 class GeneticAlgorithm {
     private:
@@ -30,6 +31,8 @@ class GeneticAlgorithm {
         Individual crossover(Individual &p1, Individual &p2);
         void mutate(Individual &individual);
         void replaceWorst(Individual &child);
+
+        void run(FileManager &fm);
 
 };
 

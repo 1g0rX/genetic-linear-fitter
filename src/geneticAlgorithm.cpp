@@ -91,3 +91,26 @@ int GeneticAlgorithm::findBestIndividual() {
     }
     return best_idx;
 }
+
+void GeneticAlgorithm::run(FileManager &fm) {
+    for (int g = 0; g < generations; g++) {
+        evaluatePopulation();
+
+        int parent1_idx, parent2_idx;
+        selectBest(parent1_idx, parent2_idx);
+
+        Individual child = crossover(population[parent1_idx], population[parent2_idx]);
+
+        mutate(child);
+
+        child.calculateFitness(x_data, y_data);
+
+        replaceWorst(child);
+
+        int best_idx = findBestIndividual();
+        std::stringstream ss;
+        ss << population[best_idx].getFitness() << " " << population[best_idx].getError() << " "
+            << population[best_idx].getError() << population[best_idx].getA() << " "
+            << population[best_idx].getA();
+    }
+}
