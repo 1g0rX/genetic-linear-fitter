@@ -113,5 +113,7 @@ void GeneticAlgorithm::run(FileManager &fm) {
         ss << population[best_idx].getFitness() << " " << population[best_idx].getError() << " "
             << population[best_idx].getError() << population[best_idx].getA() << " "
             << population[best_idx].getA();
+        
+        fm.writeLine(ss.str());
     }
 }
