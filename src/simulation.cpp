@@ -52,7 +52,7 @@ void Simulation::start() {
 
 
     GeneticAlgorithm ga(population_size, generations, x_data, y_data, delta, seed);
-    ga.initializePopulation(-10.0, 10.0);
+    ga.initializePopulation(-1.0, 1.0);
     ga.run(fm);
 
     fm.closeFiles();

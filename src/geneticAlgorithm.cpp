@@ -38,7 +38,7 @@ void GeneticAlgorithm::selectBest(int &parent1_idx, int &parent2_idx) {
         if (current_fit > best_fit) {
             // the 2nd turn the first
             second_best_fit = best_fit;
-            parent2_idx = parent2_idx;
+            parent2_idx = parent1_idx;
 
             // now we define the best
             best_fit = current_fit;
@@ -60,8 +60,12 @@ Individual GeneticAlgorithm::crossover(Individual &p1, Individual &p2) {
 void GeneticAlgorithm::mutate(Individual &individual) {
     std::uniform_int_distribution<int> dist(0, 1);
 
+    // std::uniform_real_distribution<double> dist_delta(-delta,delta);
+
     // if sort 0, change A, if sort 1, change B;
     bool change_A = (dist(generator) == 0);
+
+    // double mutate_value = dist_delta(generator);
     individual.mutate(delta, change_A);
 
 
@@ -111,8 +115,7 @@ void GeneticAlgorithm::run(FileManager &fm) {
         int best_idx = findBestIndividual();
         std::stringstream ss;
         ss << population[best_idx].getFitness() << " " << population[best_idx].getError() << " "
-            << population[best_idx].getError() << " " << population[best_idx].getA() << " "
-            << population[best_idx].getA();
+            << population[best_idx].getA() << " "<< population[best_idx].getB();
         
         fm.writeLine(ss.str());
     }
