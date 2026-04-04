@@ -97,8 +97,9 @@ int GeneticAlgorithm::findBestIndividual() {
 }
 
 void GeneticAlgorithm::run(FileManager &fm) {
+    evaluatePopulation(); // evalute
+    
     for (int g = 0; g < generations; g++) {
-        evaluatePopulation(); // evalute
 
         int parent1_idx, parent2_idx;
         selectBest(parent1_idx, parent2_idx); // select the relatives
