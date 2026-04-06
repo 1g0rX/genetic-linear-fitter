@@ -305,11 +305,15 @@ cd genetic-linear-fitter
 **Passo 3: Configurar os dados (`input.dat`)**
 Crie o arquivo `input.dat` dentro da pasta `data` e coloque os seus dados. O formato dos dados deve ser: número de pontos (`n`), população (`m`) e gerações (`G`) na primeira linha, e nas linhas seguintes, os pontos de X e Y. Se surgir dúvidas, siga o modelo representativo abaixo, ou use  os inputs dos casos de teste descritos anteriormente.
 
-`n m G
+```
+
+n m G
 x1 y1
 x2 y2
 ...
-xn yn`
+xn yn
+
+```
 
 
 **Passo 4: Compilar o código**
