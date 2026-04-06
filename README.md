@@ -290,7 +290,7 @@ No terminal, baixe o projeto para a sua máquina:
 
 ```
 
-git clone [https://github.com/1g0rX/genetic-linear-fitter.git](https://www.google.com/search?q=https://github.com/1g0rX/genetic-linear-fitter.git)
+git clone https://github.com/1g0rX/genetic-linear-fitter.git
 
 ```
 
@@ -303,7 +303,7 @@ cd genetic-linear-fitter
 ```
 
 **Passo 3: Configurar os dados (`input.dat`)**
-Crie o arquivo `data/input.dat` e coloque os seus dados. O formato deve ser: número de pontos, população e gerações na primeira linha, seguidos pelos pontos de X e Y.
+Crie o arquivo `data/input.dat` e coloque os seus dados. O formato deve ser: número de pontos, população e gerações na primeira linha, seguidos pelos pontos de X e Y. Se surgir dúvidas, pode seguir o modelo, ou até mesmo usar os inputs dos casos de teste descritos anteriormente.
 
 **Passo 4: Compilar o código**
 Use o Makefile para limpar sujeiras antigas e compilar novamente:
